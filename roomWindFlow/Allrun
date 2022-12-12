@@ -1,0 +1,39 @@
+#!/usr/bin/bash
+cd ${0%/*} || exit 1
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+./Allclean
+
+runApplication surfaceFeatures
+if [ $? -ne 0 ]; then
+    echo "ERROR: surfaceFeatures failed"
+    exit 1
+else
+    echo "surfaceFeatures succeeded"
+fi
+
+runApplication blockMesh
+if [ $? -ne 0 ]; then
+    echo "ERROR: blockMesh failed"
+    exit 1
+else
+    echo "blockMesh succeeded"
+fi
+
+runApplication snappyHexMesh -overwrite
+if [ $? -ne 0 ]; then
+    echo "ERROR: snappyHexMesh failed"
+    exit 1
+else
+    echo "snappyHexMesh succeeded"
+fi
+
+runApplication $(getApplication)
+if [ $? -ne 0 ]; then
+    echo "ERROR: $(getApplication) failed"
+    exit 1
+else
+    echo "$(getApplication) succeeded"
+fi
