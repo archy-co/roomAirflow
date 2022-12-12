@@ -1,0 +1,242 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+room
+{
+    xMin     0;
+    xMax   300;
+    yMin     0;
+    yMax   272;
+    zMin     0;
+    zMax   600;
+
+    xCondMin    0;
+    xCondMax    0;
+    yCondMin  220;
+    yCondMax  272;
+    zCondMin  100;
+    zCondMax  200;
+
+    //xCells   5;
+    //yCells   4;
+    //zCells  10;
+
+    xCells   1;
+    yCells   1;
+    zCells   1;
+}
+
+convertToMeters 1;
+
+vertices
+(
+    // 4 corners
+    ($!room/xMin $!room/yMin $!room/zMin) // 0
+    ($!room/xMax $!room/yMin $!room/zMin) // 1
+    ($!room/xMax $!room/yMax $!room/zMin) // 2
+    ($!room/xMin $!room/yMax $!room/zMin) // 3
+
+    ($!room/xMin $!room/yMin $!room/zMax) // 4
+    ($!room/xMax $!room/yMin $!room/zMax) // 5
+    ($!room/xMax $!room/yMax $!room/zMax) // 6
+    ($!room/xMin $!room/yMax $!room/zMax) // 7
+
+
+    // FIRST SIDE (xMin)
+    // External middle vertices on plane Z-Y
+    ($!room/xMin $!room/yCondMin $!room/zMin) // 8
+    ($!room/xMin $!room/yCondMin $!room/zMax) // 9
+
+    // Internal lower vertices
+    ($!room/xMin $!room/yMin $!room/zCondMin) // 10
+    ($!room/xMin $!room/yMin $!room/zCondMax) // 11
+
+    // Internal middle vertices
+    ($!room/xMin $!room/yCondMin $!room/zCondMin) // 12
+    ($!room/xMin $!room/yCondMin $!room/zCondMax) // 13
+
+    // Internal upper vertices
+    ($!room/xMin $!room/yCondMax $!room/zCondMin) // 14
+    ($!room/xMin $!room/yCondMax $!room/zCondMax) // 15
+
+
+    // SECOND SIDE (xMax)
+    // External middle vertices on plane Z-Y
+    ($!room/xMax $!room/yCondMin $!room/zMin) // 16
+    ($!room/xMax $!room/yCondMin $!room/zMax) // 17
+
+    // Internal lower vertices
+    ($!room/xMax $!room/yMin $!room/zCondMin) // 18
+    ($!room/xMax $!room/yMin $!room/zCondMax) // 19
+
+    // Internal middle vertices
+    ($!room/xMax $!room/yCondMin $!room/zCondMin) // 20
+    ($!room/xMax $!room/yCondMin $!room/zCondMax) // 21
+
+    // Internal upper vertices
+    ($!room/xMax $!room/yCondMax $!room/zCondMin) // 22
+    ($!room/xMax $!room/yCondMax $!room/zCondMax) // 23
+);
+
+blocks
+(
+    // zMax
+    hex (4 5 19 11 9 17 21 13)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+    
+    hex (9 17 21 13 7 6 23 15)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+
+
+    // zCond
+    hex (11 19 18 10 13 21 20 12)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+
+    hex (13 21 20 12 15 23 22 14)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+
+
+    // zMin
+    hex (10 18 1 0 12 20 16 8)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+
+    hex (12 20 16 8 14 22 2 3)
+    (
+        $!room/xCells
+        $!room/yCells
+        $!room/zCells
+    )
+    simpleGrading (1 1 1)
+);
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (13 12 14 15)
+        );
+    }
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (4 5 17 9)
+        );
+    }
+
+    ground
+    {
+        type wall;
+        faces
+        (
+            (4 5 19 11)
+            (11 19 18 10)
+            (10 18 1 0)
+        );
+    }
+
+    roof
+    {
+        type wall;
+        faces
+        (
+            (7 6 23 15)
+            (15 23 22 14)
+            (14 22 2 3)
+        );
+    }
+
+    backWall
+    {
+        type wall;
+        faces
+        (
+            (0 1 16 8)
+            (8 16 2 3)
+        );
+    }
+
+    frontWall
+    {
+        type wall;
+        faces
+        (
+            // outlet and this face:
+            (9 17 6 7)
+        );
+    }
+
+    leftWall
+    {
+        type symmetry;
+        faces
+        (
+            // inlet and these faces:
+            (4 11 13 9)
+            (9 13 15 7)
+            (11 10 12 13)
+            (10 0 8 12)
+            (12 8 3 14)
+        );
+    }
+
+    rightWall
+    {
+        type symmetry;
+        faces
+        (
+            (5 17 21 19)
+            (17 6 23 21)
+            (19 21 20 18)
+            (21 23 22 20)
+            (18 20 16 1)
+            (20 22 2 16)
+            // (6 7 11 10)
+        );
+    }
+
+);
+
+// ************************************************************************* //
