@@ -210,7 +210,7 @@ boundary
 
     leftWall
     {
-        type symmetry;
+        type wall;
         faces
         (
             // inlet and these faces:
@@ -224,7 +224,7 @@ boundary
 
     rightWall
     {
-        type symmetry;
+        type wall;
         faces
         (
             (5 17 21 19)
