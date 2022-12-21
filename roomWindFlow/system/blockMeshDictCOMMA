@@ -24,7 +24,7 @@ room
 
     xCondMin    0;
     xCondMax    0;
-    yCondMin  220;
+    yCondMin  240;
     yCondMax  272;
     zCondMin  100;
     zCondMax  200;
@@ -33,9 +33,9 @@ room
     //yCells   4;
     //zCells  10;
 
-    xCells   1;
-    yCells   1;
-    zCells   1;
+    xCells   5;
+    yCells   4;
+    zCells   10;
 }
 
 convertToMeters 1;

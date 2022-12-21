@@ -32,18 +32,13 @@ solvers
     }
 }
 
-SIMPLE
+PIMPLE
 {
-    residualControl
-    {
-        p               1e-4;
-        U               1e-4;
-        "(k|omega|epsilon)" 1e-4;
-    }
+    correctPhi          yes;
+    correctMeshPhi      no;
+    nOuterCorrectors    2;
+    nCorrectors         1;
     nNonOrthogonalCorrectors 0;
-    pRefCell        0;
-    pRefValue       0;
-
 }
 
 potentialFlow
