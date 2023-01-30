@@ -24,15 +24,22 @@ geometry
     room
     {
         type triSurfaceMesh;
-        file "Room.stl"
+        file "CommaHouseBedroom.stl"
         name Geometry;
         regions
         {
             // patch name specification 
             // regionNameInSTLfile    {name    patchNameInOpenFOAM;}
-            RoomInlet          {name inlet;       } 
-            RoomOutlet         {name outlet;      }
-            RoomGeometry       {name RoomGeometry;    }
+            CommaHouseBedroomAirconInlet        {name inlet;       } 
+            CommaHouseBedroomRoomBox            {name RoomGeometry;}
+            CommaHouseBedroomWindow1            {name outlet;      }
+            CommaHouseBedroomWindow2            {name outlet;      }
+            CommaHouseBedroomWindow3            {name outlet;      }
+            CommaHouseBedroomRoof               {name RoomRoof;    }
+            CommaHouseBedroomFloor              {name RoomFloor;   }
+            CommaHouseBedroomDoor1              {name Door1;   }
+            CommaHouseBedroomDoor2              {name Door2;   }
+            CommaHouseBedroomDoor3              {name Door3;   }
         }
     }
 
@@ -65,7 +72,7 @@ castellatedMeshControls
     {
         room
         {
-            level (1 1);
+            level (2 2);
             regions
             {
                 // surface region refinement 
@@ -80,6 +87,26 @@ castellatedMeshControls
                     patchInfo { type wall;         }
                 }
                 RoomGeometry  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door1  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door2  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door3  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                RoomRoof  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                RoomFloor  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }

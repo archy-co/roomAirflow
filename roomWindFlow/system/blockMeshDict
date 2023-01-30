@@ -15,19 +15,16 @@ FoamFile
 
 backgroundMesh
 {
-    xMin   -10;
-    xMax   110;
-    yMin   -10;
-    yMax   140;
+    xMin   -80;
+    xMax   130;
+    yMin   -50;
+    yMax    60;
     zMin    -5;
-    zMid    25;
-    zMax    45;
-    //xCells  20;
-    //yCells  40;
-    //zCells  16;
-    xCells  5;
-    yCells  10;
-    zCells  4;
+    zMax   130;
+
+    xCells  50;
+    yCells  100;
+    zCells  40;
 }
 
 convertToMeters 1;
@@ -39,36 +36,15 @@ vertices
     ($!backgroundMesh/xMax $!backgroundMesh/yMax $!backgroundMesh/zMin) // 2
     ($!backgroundMesh/xMin $!backgroundMesh/yMax $!backgroundMesh/zMin) // 3
 
-    ($!backgroundMesh/xMin $!backgroundMesh/yMin $!backgroundMesh/zMid) // 4
-    ($!backgroundMesh/xMax $!backgroundMesh/yMin $!backgroundMesh/zMid) // 5
-    ($!backgroundMesh/xMax $!backgroundMesh/yMax $!backgroundMesh/zMid) // 6
-    ($!backgroundMesh/xMin $!backgroundMesh/yMax $!backgroundMesh/zMid) // 7
-
-    ($!backgroundMesh/xMin $!backgroundMesh/yMin $!backgroundMesh/zMax) // 8
-    ($!backgroundMesh/xMax $!backgroundMesh/yMin $!backgroundMesh/zMax) // 9
-    ($!backgroundMesh/xMax $!backgroundMesh/yMax $!backgroundMesh/zMax) // 10
-    ($!backgroundMesh/xMin $!backgroundMesh/yMax $!backgroundMesh/zMax) // 11
+    ($!backgroundMesh/xMin $!backgroundMesh/yMin $!backgroundMesh/zMax) // 4
+    ($!backgroundMesh/xMax $!backgroundMesh/yMin $!backgroundMesh/zMax) // 5
+    ($!backgroundMesh/xMax $!backgroundMesh/yMax $!backgroundMesh/zMax) // 6
+    ($!backgroundMesh/xMin $!backgroundMesh/yMax $!backgroundMesh/zMax) // 7
 );
 
 blocks
 (
-    //hex (0 1 2 3 8 9 10 11)
-    //(
-        //$!backgroundMesh/xCells
-        //$!backgroundMesh/yCells
-        //$!backgroundMesh/zCells
-    //)
-    //simpleGrading (1 1 1)
-
     hex (0 1 2 3 4 5 6 7)
-    (
-        $!backgroundMesh/xCells
-        $!backgroundMesh/yCells
-        $!backgroundMesh/zCells
-    )
-    simpleGrading (1 1 1)
-
-    hex (4 5 6 7 8 9 10 11)
     (
         $!backgroundMesh/xCells
         $!backgroundMesh/yCells
@@ -79,36 +55,7 @@ blocks
 
 boundary
 (
-    //inlet
-    //{
-        //type patch;
-        //faces
-        //(
-            //(0 3 7 4)
-            //(4 7 11 8)
-        //);
-    //}
-
-    //outlet
-    //{
-        //type patch;
-        //faces
-        //(
-            //(5 9 10 6)
-        //);
-    //}
-
-    //horizontalFace
-    //{
-        //type patch;
-        //faces
-        //(
-            //(4 5 6 7)
-        //);
-    //}
-
-
-    ground
+    lowBoundary
     {
         type wall;
         faces
@@ -117,12 +64,12 @@ boundary
         );
     }
 
-    roof
+    topBoundary
     {
         type wall;
         faces
         (
-            (8 9 10 11)
+            (4 5 6 7)
         );
     }
 
@@ -132,9 +79,6 @@ boundary
         faces
         (
             (1 5 6 2)
-
-            // outlet
-            (5 9 10 6)
         );
     }
 
@@ -143,29 +87,25 @@ boundary
         type wall;
         faces
         (
-            // inlet
             (0 3 7 4)
-            (4 7 11 8)
         );
     }
 
-    back
+    backBoundary
     {
         type symmetry;
         faces
         (
             (0 4 5 1)
-            (4 8 9 5)
         );
     }
 
-    front
+    frontBoundary
     {
         type symmetry;
         faces
         (
             (3 2 6 7)
-            (6 7 11 10)
         );
     }
 
