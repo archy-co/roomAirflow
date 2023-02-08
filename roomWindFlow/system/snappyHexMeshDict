@@ -33,13 +33,13 @@ geometry
             CommaHouseBedroomAirconInlet        {name inlet;       } 
             CommaHouseBedroomRoomBox            {name RoomGeometry;}
             CommaHouseBedroomWindow1            {name outlet;      }
-            CommaHouseBedroomWindow2            {name outlet;      }
-            CommaHouseBedroomWindow3            {name outlet;      }
+            CommaHouseBedroomWindow2            {name Window2;     }
+            CommaHouseBedroomWindow3            {name Window3;     }
             CommaHouseBedroomRoof               {name RoomRoof;    }
             CommaHouseBedroomFloor              {name RoomFloor;   }
-            CommaHouseBedroomDoor1              {name Door1;   }
-            CommaHouseBedroomDoor2              {name Door2;   }
-            CommaHouseBedroomDoor3              {name Door3;   }
+            CommaHouseBedroomDoor1              {name Door1;       }
+            CommaHouseBedroomDoor2              {name Door2;       }
+            CommaHouseBedroomDoor3              {name Door3;       }
         }
     }
 
