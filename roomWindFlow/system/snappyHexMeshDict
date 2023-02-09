@@ -24,41 +24,39 @@ geometry
     room
     {
         type triSurfaceMesh;
-        file "CommaHouseBedroom.stl"
+        file "COMMA_House_Bedroom.stl"
         name Geometry;
         regions
         {
             // patch name specification 
             // regionNameInSTLfile    {name    patchNameInOpenFOAM;}
-            CommaHouseBedroomAirconInlet        {name inlet;       } 
-            CommaHouseBedroomRoomBox            {name RoomGeometry;}
-            CommaHouseBedroomWindow1            {name outlet;      }
-            CommaHouseBedroomWindow2            {name Window2;     }
-            CommaHouseBedroomWindow3            {name Window3;     }
-            CommaHouseBedroomRoof               {name RoomRoof;    }
-            CommaHouseBedroomFloor              {name RoomFloor;   }
-            CommaHouseBedroomDoor1              {name Door1;       }
-            CommaHouseBedroomDoor2              {name Door2;       }
-            CommaHouseBedroomDoor3              {name Door3;       }
+            Geometry                {name RoomGeometry;      }
+            Air_Conditioner         {name AirCon;            }
+            Air_Conditioner_Inlet   {name inlet;             }
+
+            Bed1                    {name Bed1;              }
+            Bed1_Delim              {name Bed1_Delim;        }
+            Bed2                    {name Bed2;              }
+
+            Door_1_Close            {name Door1_Close;       }
+
+            Door_2_Close            {name Door2_Close;       }
+            Door_2_Lower            {name Door2_Lower;       }
+            Door_2_Open             {name Door2_Open;        }
+            Door_2_Upper_Close      {name Door2_Upper_Close; }
+            Door_2_Upper_Open       {name Door2_Upper_Open;  }
+
+            Door_3_Close            {name Door3_Close;       }
+            Door_3_Open             {name Door3_Open;        }
+
+            Floor                   {name Floor;             }
+            Roof                    {name Roof;              }
+
+            Window_1                {name Window_1;          }
+            Window_2                {name Window_2;          }
+            Window_3                {name outlet;            }
         }
     }
-
-
-
-
-
-    //room
-    //{
-        //type triSurfaceMesh;
-        //file "Room.stl";
-    //}
-
-    //refinementBox
-    //{
-        //type searchableBox;
-        //min  (-1  -1  -1);
-        //max  (1  1  1);
-    //}
 };
 
 castellatedMeshControls
@@ -86,30 +84,88 @@ castellatedMeshControls
                     level (2 2);
                     patchInfo { type wall;         }
                 }
+
                 RoomGeometry  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door1  {
+                AirCon  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door2  {
+
+                Bed1  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door3  {
+                Bed1_Delim  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                RoomRoof  {
+                Bed2  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                RoomFloor  {
+                Door_1_Close  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
+
+
+                Door_1_Close  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_2_Close  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_2_Lower  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_2_Open  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_2_Upper_Close  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_2_Upper_Open  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+
+                Door_3_Close  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Door_3_Open  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Floor  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Roof  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Window_1  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                Window_2  {
+                    level (2 2);
+                    patchInfo { type wall;          }
+                }
+                //Window_3  {
+                    //level (2 2);
+                    //patchInfo { type wall;          }
+                //}
+
             }
             patchInfo { type wall; }
         }
@@ -124,7 +180,7 @@ castellatedMeshControls
         //}
     //}
 
-    locationInMesh (10 10 10); // Offset from (0 0 0) to avoid coinciding with face or edge
+    locationInMesh (5 5 5); // Offset from (0 0 0) to avoid coinciding with face or edge
     nCellsBetweenLevels 2;
 }
 
