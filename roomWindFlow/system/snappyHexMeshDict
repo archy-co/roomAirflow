@@ -39,14 +39,13 @@ geometry
             Bed2                    {name Bed2;              }
 
             Door_1_Close            {name Door1_Close;       }
-
             Door_2_Close            {name Door2_Close;       }
+            Door_3_Close            {name Door3_Close;       }
+
             Door_2_Lower            {name Door2_Lower;       }
             Door_2_Open             {name Door2_Open;        }
             Door_2_Upper_Close      {name Door2_Upper_Close; }
             Door_2_Upper_Open       {name Door2_Upper_Open;  }
-
-            Door_3_Close            {name Door3_Close;       }
             Door_3_Open             {name Door3_Open;        }
 
             Floor                   {name Floor;             }
@@ -78,11 +77,11 @@ castellatedMeshControls
                 // stlRegionName     { level (default feature_angle_resolved); patchInfo { type patchType; }
                 inlet     {
                     level (2 2);
-                    patchInfo { type wall;         }
+                    patchInfo { type inlet;         }
                 }
                 outlet    {
                     level (2 2);
-                    patchInfo { type wall;         }
+                    patchInfo { type outlet;        }
                 }
 
                 RoomGeometry  {
@@ -106,11 +105,6 @@ castellatedMeshControls
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door_1_Close  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
-
 
                 Door_1_Close  {
                     level (2 2);
@@ -120,31 +114,32 @@ castellatedMeshControls
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door_2_Lower  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
-                Door_2_Open  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
-                Door_2_Upper_Close  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
-                Door_2_Upper_Open  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
-
                 Door_3_Close  {
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-                Door_3_Open  {
-                    level (2 2);
-                    patchInfo { type wall;          }
-                }
+
+                //Door_2_Lower  {
+                    //level (2 2);
+                    //patchInfo { type empty;          }
+                //}
+                //Door_2_Open  {
+                    //level (2 2);
+                    //patchInfo { type empty;          }
+                //}
+                //Door_2_Upper_Close  {
+                    //level (2 2);
+                    //patchInfo { type empty;          }
+                //}
+                //Door_2_Upper_Open  {
+                    //level (2 2);
+                    //patchInfo { type empty;          }
+                //}
+                //Door_3_Open  {
+                    //level (2 2);
+                    //patchInfo { type empty;          }
+                //}
+
                 Floor  {
                     level (2 2);
                     patchInfo { type wall;          }
