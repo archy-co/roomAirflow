@@ -1,0 +1,217 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+vertices
+(
+    // 4 corners
+    (0 0 0) // 0
+    (300 0 0) // 1
+    (300 272 0) // 2
+    (0 272 0) // 3
+
+    (0 0 600) // 4
+    (300 0 600) // 5
+    (300 272 600) // 6
+    (0 272 600) // 7
+
+
+    // FIRST SIDE (xMin)
+    // External middle vertices on plane Z-Y
+    (0 240 0) // 8
+    (0 240 600) // 9
+
+    // Internal lower vertices
+    (0 0 100) // 10
+    (0 0 200) // 11
+
+    // Internal middle vertices
+    (0 240 100) // 12
+    (0 240 200) // 13
+
+    // Internal upper vertices
+    (0 272 100) // 14
+    (0 272 200) // 15
+
+
+    // SECOND SIDE (xMax)
+    // External middle vertices on plane Z-Y
+    (300 240 0) // 16
+    (300 240 600) // 17
+
+    // Internal lower vertices
+    (300 0 100) // 18
+    (300 0 200) // 19
+
+    // Internal middle vertices
+    (300 240 100) // 20
+    (300 240 200) // 21
+
+    // Internal upper vertices
+    (300 272 100) // 22
+    (300 272 200) // 23
+);
+
+blocks
+(
+    // zMax
+    hex (4 5 19 11 9 17 21 13)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+    
+    hex (9 17 21 13 7 6 23 15)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+
+
+    // zCond
+    hex (11 19 18 10 13 21 20 12)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+
+    hex (13 21 20 12 15 23 22 14)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+
+
+    // zMin
+    hex (10 18 1 0 12 20 16 8)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+
+    hex (12 20 16 8 14 22 2 3)
+    (
+        5
+        4
+        10
+    )
+    simpleGrading (1 1 1)
+);
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (13 12 14 15)
+        );
+    }
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (4 5 17 9)
+        );
+    }
+
+    ground
+    {
+        type wall;
+        faces
+        (
+            (4 5 19 11)
+            (11 19 18 10)
+            (10 18 1 0)
+        );
+    }
+
+    roof
+    {
+        type wall;
+        faces
+        (
+            (7 6 23 15)
+            (15 23 22 14)
+            (14 22 2 3)
+        );
+    }
+
+    backWall
+    {
+        type wall;
+        faces
+        (
+            (0 1 16 8)
+            (8 16 2 3)
+        );
+    }
+
+    frontWall
+    {
+        type wall;
+        faces
+        (
+            // outlet and this face:
+            (9 17 6 7)
+        );
+    }
+
+    leftWall
+    {
+        type wall;
+        faces
+        (
+            // inlet and these faces:
+            (4 11 13 9)
+            (9 13 15 7)
+            (11 10 12 13)
+            (10 0 8 12)
+            (12 8 3 14)
+        );
+    }
+
+    rightWall
+    {
+        type wall;
+        faces
+        (
+            (5 17 21 19)
+            (17 6 23 21)
+            (19 21 20 18)
+            (21 23 22 20)
+            (18 20 16 1)
+            (20 22 2 16)
+            // (6 7 11 10)
+        );
+    }
+
+);
+
+// ************************************************************************* //
