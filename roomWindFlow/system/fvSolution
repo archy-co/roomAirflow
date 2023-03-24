@@ -22,8 +22,22 @@ solvers
         tolerance       1e-6;
         relTol          0.1;
     }
+    pFinal
+    {
+	solver           GAMG;
+	smoother         GaussSeidel;
+	tolerance        1e-6;
+	relTol           0.1;
+    }
 
     "(U|k|omega|epsilon)"
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-6;
+        relTol          0.1;
+    }
+    "(UFinal|kFinal|omegaFinal|epsilonFinal)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;

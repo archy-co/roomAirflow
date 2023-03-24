@@ -49,19 +49,19 @@ runTimeModifiable true;
 
 functions
 {
-    //scalar0
-    //{
-        //type    scalarTransport;
-        //functionObjectLibs ("libsolverFunctionObjects.so");
-        //enabled true;
-        //writeControl    outputTime;
+    scalar0
+    {
+        type    scalarTransport;
+        functionObjectLibs ("libsolverFunctionObjects.so");
+        enabled true;
+        writeControl    outputTime;
 
-        //field   C;
-        //nCorr 1;
-        //D   0.0001;
+        field   C;
+        nCorr 1;
+        D   0.0001;
 
-        //log yes;
-    //}
+        log yes;
+    }
 }
 
 // ************************************************************************* //
