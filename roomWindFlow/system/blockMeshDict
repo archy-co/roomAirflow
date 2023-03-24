@@ -69,6 +69,15 @@ boundary
         );
     }
 
+    //outlet
+    //{
+        //type patch;
+        //faces
+        //(
+        //);
+    //}
+
+
     //lowBoundary
     //{
         //type wall;

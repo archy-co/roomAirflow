@@ -23,6 +23,12 @@ solvers
         relTol          0.1;
     }
 
+    pFinal
+    {
+        $p;
+        relTol          0;
+    }
+
     "(U|k|omega|epsilon)"
     {
         solver          smoothSolver;
@@ -30,6 +36,25 @@ solvers
         tolerance       1e-6;
         relTol          0.1;
     }
+
+    UFinal
+    {
+        $U;
+        relTol          0;
+    }
+
+    epsilonFinal
+    {
+        $epsilon;
+        relTol          0;
+    }
+
+    kFinal
+    {
+        $k;
+        relTol          0;
+    }
+
 
     C
     {

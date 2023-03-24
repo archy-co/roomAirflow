@@ -14,7 +14,7 @@ cd ${0%/*} || exit 1
     #echo "surfaceFeatures succeeded"
 #fi
 
-runApplication blockMesh -dict system/blockMeshDict
+runApplication blockMesh 2>&1 | tee log.blockMesh
 if [ $? -ne 0 ]; then
     echo "ERROR: blockMesh failed"
     exit 1
@@ -22,7 +22,7 @@ else
     echo "blockMesh succeeded"
 fi
 
-runApplication snappyHexMesh -overwrite
+runApplication snappyHexMesh -overwrite 2>&1 | tee log.snappyHexMesh
 if [ $? -ne 0 ]; then
     echo "ERROR: snappyHexMesh failed"
     exit 1

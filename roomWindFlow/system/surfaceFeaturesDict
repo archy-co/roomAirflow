@@ -13,7 +13,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-surfaces ("COMMA_House_Bedroom.stl");
+surfaces ("COMMA_House_Bedroom_General.stl");
 
 #includeEtc "caseDicts/surface/surfaceFeaturesDict.cfg"
 
