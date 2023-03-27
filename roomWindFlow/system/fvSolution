@@ -53,6 +53,14 @@ solvers
         relTol          0;
         minInter        1;
     }
+    CFinal
+    {
+        solver      PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-6;
+        relTol          0;
+        minInter        1;
+    }
 }
 
 PIMPLE
@@ -62,6 +70,18 @@ PIMPLE
     nOuterCorrectors    2;
     nCorrectors         1;
     nNonOrthogonalCorrectors 0;
+}
+
+SIMPLE
+{
+    consistent          yes;
+
+    residualControl
+    {
+        p               1e-3;
+        U               1e-4;
+        "(k|epsilon)"   1e-4;
+    }
 }
 
 potentialFlow
