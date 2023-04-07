@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  10
+    \\  /    A nd           | Version:  9
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -15,9 +15,9 @@ FoamFile
 
 #includeEtc "caseDicts/mesh/generation/snappyHexMeshDict.cfg"
 
-castellatedMesh on;
-snap            on;
-addLayers       off;
+castellatedMesh true;
+snap            true;
+addLayers       false;
 
 geometry
 {
@@ -42,12 +42,6 @@ geometry
             Door_2_Close            {name Door2_Close;       }
             Door_3_Close            {name Door3_Close;       }
 
-            Door_2_Lower            {name Door2_Lower;       }
-            Door_2_Open             {name Door2_Open;        }
-            Door_2_Upper_Close      {name Door2_Upper_Close; }
-            Door_2_Upper_Open       {name Door2_Upper_Open;  }
-            Door_3_Open             {name Door3_Open;        }
-
             Floor                   {name Floor;             }
             Roof                    {name Roof;              }
 
@@ -60,6 +54,12 @@ geometry
 
 castellatedMeshControls
 {
+    // The surface refinement loop might spend lots of iterations refining just a
+    // few cells. This setting will cause refinement to stop if <= minimumRefine
+    // are selected for refinement. Note: it will at least do one iteration
+    // (unless the number of cells to refine is 0)
+    minRefinementCells 10;
+
     features
     (
       //{ file  "Room.eMesh"; level 1; }
@@ -74,7 +74,7 @@ castellatedMeshControls
             {
                 // surface region refinement 
                 // patch type specification
-                // stlRegionName     { level (default feature_angle_resolved); patchInfo { type patchType; }
+                // stlRegionName     { level (default feature_angle_resolved); patchInfo { type patchType; } }
                 inlet     {
                     level (2 2);
                     patchInfo { type inlet;         }
@@ -118,28 +118,6 @@ castellatedMeshControls
                     level (2 2);
                     patchInfo { type wall;          }
                 }
-
-                //Door_2_Lower  {
-                    //level (2 2);
-                    //patchInfo { type empty;          }
-                //}
-                //Door_2_Open  {
-                    //level (2 2);
-                    //patchInfo { type empty;          }
-                //}
-                //Door_2_Upper_Close  {
-                    //level (2 2);
-                    //patchInfo { type empty;          }
-                //}
-                //Door_2_Upper_Open  {
-                    //level (2 2);
-                    //patchInfo { type empty;          }
-                //}
-                //Door_3_Open  {
-                    //level (2 2);
-                    //patchInfo { type empty;          }
-                //}
-
                 Floor  {
                     level (2 2);
                     patchInfo { type wall;          }
@@ -166,23 +144,36 @@ castellatedMeshControls
         }
     }
 
-    //refinementRegions
-    //{
-        //refinementBox
-        //{
-            //mode    inside;
-            //level   2;
-        //}
-    //}
+    refinementRegions
+    {
+        refinementBox
+        {
+            mode    inside;
+            level   3;
+        }
+    }
 
     locationInMesh (5 5 5); // Offset from (0 0 0) to avoid coinciding with face or edge
-    nCellsBetweenLevels 2;
+    nCellsBetweenLevels 3;
 }
 
 snapControls
 {
-    //explicitFeatureSnap    true;
-    //implicitFeatureSnap    false;
+    //- Number of patch smoothing iterations before finding correspondence
+    //  to surface
+    nSmoothPatch 3;
+
+    //- Relative distance for points to be attracted by surface feature point
+    //  or edge. True distance is this factor times local
+    //  maximum edge length.
+    tolerance 2.0;
+
+    //- Number of mesh displacement relaxation iterations.
+    nSolveIter 30;
+
+    //- Maximum number of snapping relaxation iterations. Should stop
+    //  before upon reaching a correct mesh.
+    nRelaxIter 5;
 }
 
 addLayersControls
@@ -206,9 +197,9 @@ meshQualityControls
 
 writeFlags
 (
-    // scalarLevels
-    // layerSets
-    // layerFields
+    scalarLevels
+    layerSets
+    layerFields
 );
 
 mergeTolerance 1e-6;

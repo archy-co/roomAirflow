@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  10
+    \\  /    A nd           | Version:  9
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -24,8 +24,7 @@ solvers
     }
     pFinal
     {
-	solver           GAMG;
-	smoother         GaussSeidel;
+        $p;
 	tolerance        1e-6;
 	relTol           0.1;
     }
@@ -33,34 +32,38 @@ solvers
     "(U|k|omega|epsilon)"
     {
         solver          smoothSolver;
+        //smoother        GaussSeidel;
         smoother        symGaussSeidel;
         tolerance       1e-6;
         relTol          0.1;
     }
-    "(UFinal|kFinal|omegaFinal|epsilonFinal)"
+    "(U|k|omega|epsilon)Final"
     {
-        solver          smoothSolver;
-        smoother        symGaussSeidel;
-        tolerance       1e-6;
+        $U;
         relTol          0.1;
     }
 
     C
     {
-        solver      PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
+        $U;
         relTol          0;
-        minInter        1;
     }
-    CFinal
-    {
-        solver      PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-6;
-        relTol          0;
-        minInter        1;
-    }
+    // C
+    // {
+        // solver      PBiCGStab;
+        // preconditioner  DILU;
+        // tolerance       1e-6;
+        // minInter        1;
+        // relTol          0;
+    // }
+    // CFinal
+    // {
+        // solver      PBiCGStab;
+        // preconditioner  DILU;
+        // tolerance       1e-6;
+        // relTol          0;
+        // minInter        1;
+    // }
 }
 
 PIMPLE

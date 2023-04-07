@@ -2,7 +2,7 @@
   =========                 |
   \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
    \\    /   O peration     | Website:  https://openfoam.org
-    \\  /    A nd           | Version:  10
+    \\  /    A nd           | Version:  9
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -21,7 +21,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         500;
+endTime         1200;
 
 deltaT          1;
 
@@ -49,19 +49,8 @@ runTimeModifiable true;
 
 functions
 {
-    scalar0
-    {
-        type    scalarTransport;
-        functionObjectLibs ("libsolverFunctionObjects.so");
-        enabled true;
-        writeControl    outputTime;
-
-        field   C;
-        nCorr 1;
-        D   0.0001;
-
-        log yes;
-    }
+    // #includeFunc scalarTransport(C, alphaD=1, alphaDt=1)
+    // #includeFunc time
 }
 
 // ************************************************************************* //
